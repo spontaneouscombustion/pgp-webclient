@@ -1,10 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import VerifyView from '@/views/VerifyView.vue'
-import SignView from '@/views/SignView.vue'
-import EncryptView from '@/views/EncryptView.vue'
-import DecryptView from '@/views/DecryptView.vue'
-import RevokeView from '@/views/RevokeView.vue'
+import HomeView from '@/views/HomeView.vue'
+import Page404View from '@/views/Page404View.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,32 +8,37 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: () => HomeView
     },
     {
       path: '/verify',
       name: 'verify',
-      component: VerifyView
+      component: () => import('@/views/VerifyView.vue')
     },
     {
       path: '/sign',
       name: 'sign',
-      component: SignView
+      component: () => import('@/views/SignView.vue')
     },
     {
       path: '/encrypt',
       name: 'encrypt',
-      component: EncryptView
+      component: () => import('@/views/EncryptView.vue')
     },
     {
       path: '/decrypt',
       name: 'decrypt',
-      component: DecryptView
+      component: () => import('@/views/DecryptView.vue')
     },
     {
       path: '/revoke',
       name: 'revoke',
-      component: RevokeView
+      component: () => import('@/views/RevokeView.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: Page404View
     }
   ]
 })
