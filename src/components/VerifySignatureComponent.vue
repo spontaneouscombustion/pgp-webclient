@@ -43,9 +43,9 @@ async function verifyDetachedSig(text: string, armoredSig: string, armoredPkey: 
 
 async function check(): Promise<void> {
   signedBy.value = ''
-  const result = await verifyDetachedSig(message.value, signature.value, publicKey.value)
-  const { verified, keyID } = result.signatures[0]
   try {
+    const result = await verifyDetachedSig(message.value, signature.value, publicKey.value)
+    const { verified, keyID } = result.signatures[0]
     await verified // throws on invalid signature
     signedBy.value = keyID.toHex()
   } catch (e) {
