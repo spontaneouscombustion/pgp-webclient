@@ -81,4 +81,8 @@ async function doRevokeByRevocationCert() {
       <button type="submit">Revoke by Revocation Certificate</button>
     </div>
   </form>
+  <div v-if="revokedKey">
+    <h4>Revoked successfully!</h4>
+    <pre v-text="revokedKey"></pre>
+  </div>
 </template>
