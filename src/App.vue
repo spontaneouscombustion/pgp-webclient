@@ -6,6 +6,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <header>
     <nav>
       <RouterLink to="/">Home</RouterLink>
+      <RouterLink :to="{ name: 'generate' }">Generate</RouterLink>
       <RouterLink :to="{ name: 'encrypt' }">Encrypt</RouterLink>
       <RouterLink :to="{ name: 'decrypt' }">Decrypt</RouterLink>
       <RouterLink :to="{ name: 'sign' }">Sign</RouterLink>
