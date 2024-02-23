@@ -1,9 +1,3 @@
-<script lang="ts" setup>
-import KeyPairGenerator from '@/components/KeyPairGeneratorComponent.vue'
-</script>
-
 <template>
-  <main>
-    <KeyPairGenerator />
-  </main>
+  <h1>PGP Web Client</h1>
 </template>
