@@ -41,6 +41,11 @@ const router = createRouter({
       component: () => import('@/views/RevokeView.vue')
     },
     {
+      path: '/publickey',
+      name: 'publickey',
+      component: () => import('@/views/PublicKeyView.vue')
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
       component: Page404View
