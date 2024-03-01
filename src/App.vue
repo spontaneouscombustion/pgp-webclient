@@ -1,19 +1,9 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
+import NavbarComponent from './components/NavbarComponent.vue';
 </script>
 
 <template>
-  <header>
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink :to="{ name: 'generate' }">Generate</RouterLink>
-      <RouterLink :to="{ name: 'publickey' }">Extract Public Key</RouterLink>
-      <RouterLink :to="{ name: 'encrypt' }">Encrypt</RouterLink>
-      <RouterLink :to="{ name: 'decrypt' }">Decrypt</RouterLink>
-      <RouterLink :to="{ name: 'sign' }">Sign</RouterLink>
-      <RouterLink :to="{ name: 'verify' }">Verify</RouterLink>
-      <RouterLink :to="{ name: 'revoke' }">Revoke</RouterLink>
-    </nav>
-  </header>
+  <NavbarComponent/>
   <RouterView />
 </template>
