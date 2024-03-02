@@ -11,7 +11,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/',
+      path: '/generate',
       name: 'generate',
       component: () => import('@/views/GeneratorView.vue')
     },
