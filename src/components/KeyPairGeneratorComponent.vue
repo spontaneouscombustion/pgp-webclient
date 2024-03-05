@@ -43,7 +43,6 @@ enum PGPKeyFormat {
 }
 
 enum RSAKeySize {
-  B1024 = 1024,
   B2048 = 2048,
   B4096 = 4096,
   B8192 = 8192
@@ -188,7 +187,6 @@ async function generate() {
             <span class="label-text">RSA Size</span>
           </label>
           <select id="rsaBits" class="select select-bordered w-full" v-model="rsaBits">
-            <option :value="RSAKeySize.B1024">{{ RSAKeySize.B1024 }} Bits</option>
             <option :value="RSAKeySize.B2048">{{ RSAKeySize.B2048 }} Bits</option>
             <option :value="RSAKeySize.B4096">{{ RSAKeySize.B4096 }} Bits</option>
             <option :value="RSAKeySize.B8192">{{ RSAKeySize.B8192 }} Bits</option>
