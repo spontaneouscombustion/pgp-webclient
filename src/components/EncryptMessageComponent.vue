@@ -57,17 +57,7 @@ async function doEncrypt() {
 
 <template>
   <form action="/" class="flex flex-col gap-3" @submit.prevent="doEncrypt">
-    <div class="form-control">
-      <label for="message">
-        <span class="label-text">Message</span>
-      </label>
-      <textarea
-        id="message"
-        class="textarea textarea-bordered"
-        v-model="textmessage"
-        required
-      ></textarea>
-    </div>
+    <ImportKeyComponent label="Message" v-model="textmessage" :required="true" />
     <div class="grid grid-cols-1 gap-2">
       <div v-for="(rpk, index) in recipientPubKeys" :key="index" class="flex items-end gap-2">
         <ImportKeyComponent
