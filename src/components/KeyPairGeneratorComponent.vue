@@ -60,8 +60,10 @@ const keyFormat = ref<PGPKeyFormat>(PGPKeyFormat.ARMORED)
 const keyType = ref<PGPKeyType>(PGPKeyType.ECC)
 const rsaBits = ref<RSAKeySize>(RSAKeySize.B4096)
 const keyTtl = ref<KeyTTL>(KeyTTL.YEAR)
+const loader = ref<boolean>(false)
 
 async function generate() {
+  loader.value = true
   if (keyType.value === PGPKeyType.ECC) {
     const kp = await generateKey({
       type: PGPKeyType.ECC,
@@ -85,6 +87,7 @@ async function generate() {
   } else {
     alert('Invalid Key Type!')
   }
+  loader.value = false
 }
 </script>
 <template>
@@ -209,7 +212,13 @@ async function generate() {
       </div>
     </div>
     <div class="grid md:flex md:justify-end">
-      <button class="btn btn-primary" type="submit">Generate</button>
+      <button class="btn btn-primary" type="submit" :disabled="loader">
+        <template v-if="loader">
+          Please wait.
+          <span class="loading loading-spinner loading-sm"></span>
+        </template>
+        <template v-else> Generate </template>
+      </button>
     </div>
   </form>
 </template>
