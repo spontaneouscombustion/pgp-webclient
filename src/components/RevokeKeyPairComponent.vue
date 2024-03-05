@@ -1,88 +1,42 @@
 <script lang="ts" setup>
-import { readPrivateKey, decryptKey, revokeKey, readKey } from 'openpgp'
-import { ref } from 'vue'
+import RevokeByCertificateComponent from './RevokeByCertificateComponent.vue'
+import RevokeByPrivateKeyComponent from './RevokeByPrivateKeyComponent.vue'
+import { ref, shallowRef } from 'vue'
 
-const privateKey = ref<string>('')
-const password = ref<string>('')
-const revokeCert = ref<string>('')
-const revokedKey = ref<string>('')
-const publicKey = ref<string>('')
+const emit = defineEmits<{
+  (e: 'revoked', publicKey: string): void
+}>()
 
-async function doRevokeByPrivateKey() {
-  revokedKey.value = ''
-
-  try {
-    const privkey = await decryptKey({
-      privateKey: await readPrivateKey({
-        armoredKey: privateKey.value
-      }),
-      passphrase: password.value
-    })
-
-    const { publicKey: revKey } = await revokeKey({
-      key: privkey,
-      format: 'armored'
-    })
-
-    revokedKey.value = revKey
-  } catch (e) {
-    console.log(e)
-    if (e instanceof Error) {
-      alert(e.message)
-    }
+const activeTab = ref<number>(0)
+const tabs = ref([
+  {
+    component: shallowRef(RevokeByCertificateComponent),
+    name: 'Revocation Key'
+  },
+  {
+    component: shallowRef(RevokeByPrivateKeyComponent),
+    name: 'Private Key'
   }
-}
+])
 
-async function doRevokeByRevocationCert() {
-  revokedKey.value = ''
-
-  try {
-    const { publicKey: revKey } = await revokeKey({
-      key: await readKey({ armoredKey: publicKey.value }),
-      revocationCertificate: revokeCert.value,
-      format: 'armored'
-    })
-
-    revokedKey.value = revKey
-  } catch (e) {
-    console.log(e)
-    if (e instanceof Error) {
-      alert(e.message)
-    }
-  }
+function onRevoked(publicKey: string) {
+  emit('revoked', publicKey)
 }
 </script>
 
 <template>
-  <h1>Revoke Key</h1>
-  <form action="/" @submit.prevent="doRevokeByPrivateKey">
-    <div>
-      <label>Private Key</label>
-      <textarea v-model="privateKey"></textarea>
+  <div>
+    <div role="tablist" class="tabs tabs-boxed">
+      <button
+        v-for="(tab, index) in tabs"
+        :key="tab.name"
+        role="tab"
+        class="tab"
+        @click="activeTab = index"
+      >
+        {{ tab.name }}
+      </button>
     </div>
-    <div>
-      <label>Private Key Password</label>
-      <input type="password" v-model="password" />
-    </div>
-    <div>
-      <button type="submit">Revoke by Private Key</button>
-    </div>
-  </form>
-  <form action="/" @submit.prevent="doRevokeByRevocationCert">
-    <div>
-      <label>Revocation Certificate</label>
-      <textarea v-model="revokeCert"></textarea>
-    </div>
-    <div>
-      <label>Public Key</label>
-      <textarea v-model="publicKey"></textarea>
-    </div>
-    <div>
-      <button type="submit">Revoke by Revocation Certificate</button>
-    </div>
-  </form>
-  <div v-if="revokedKey">
-    <h4>Revoked successfully!</h4>
-    <pre v-text="revokedKey"></pre>
+    <component :is="tabs[activeTab].component" @revoked="onRevoked"></component>
   </div>
 </template>

@@ -1,39 +1,43 @@
 <script lang="ts" setup>
 import {
   decrypt,
-  decryptKey,
   readMessage,
-  readPrivateKey,
+  readKey,
   type DecryptOptions,
   type Message,
-  readKey
+  type VerificationResult,
+  type MaybeStream,
+  type Data
 } from 'openpgp'
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
+import ImportKeyComponent from './ImportKeyComponent.vue'
+import { privateKeySymbol } from '@/keys'
+
 const encryptedMessage = ref<string>('')
-const privateKey = ref<string>('')
-const privateKeyPassword = ref<string>('')
 const publicKey = ref<string>('')
-const result = ref<string>('')
+const injected = inject(privateKeySymbol)
+
+const emit = defineEmits<{
+  decrypt: [data: MaybeStream<Data>, signature: VerificationResult[]]
+}>()
 
 async function doDecrypt() {
-  result.value = ''
   try {
     const message = await readMessage({
       armoredMessage: encryptedMessage.value
     })
 
-    const privKey = await decryptKey({
-      privateKey: await readPrivateKey({
-        armoredKey: privateKey.value
-      }),
-      passphrase: privateKeyPassword.value
-    })
+    if (!injected?.privateKey || !injected.privateKey.value) {
+      const drawerElement = document.getElementById('privkey-drawer') as HTMLInputElement
+      drawerElement.checked = true
+      return
+    }
 
     let decryptOptions: DecryptOptions & {
       message: Message<string>
     } = {
       message,
-      decryptionKeys: privKey
+      decryptionKeys: injected.privateKey.value
     }
 
     if (publicKey.value) {
@@ -45,9 +49,11 @@ async function doDecrypt() {
 
     const { data, signatures } = await decrypt(decryptOptions)
 
-    result.value = data
+    emit('decrypt', data, signatures)
 
-    await signatures[0].verified
+    // result.value = data
+
+    // await signatures[0].verified
   } catch (e) {
     console.log(e)
     if (e instanceof Error) {
@@ -58,29 +64,11 @@ async function doDecrypt() {
 </script>
 
 <template>
-  <h1>Decrypt Message</h1>
-  <form action="/" @submit.prevent="doDecrypt">
-    <div>
-      <label>Enter PGP Encrypted Message</label>
-      <textarea v-model="encryptedMessage" required></textarea>
-    </div>
-    <div>
-      <label>Your Private Key</label>
-      <textarea v-model="privateKey" required></textarea>
-    </div>
-    <div>
-      <label>Private Key Password</label>
-      <input v-model="privateKeyPassword" type="password" />
-    </div>
-    <div>
-      <label>Signers Public Key(optional)</label>
-      <textarea v-model="publicKey"></textarea>
-    </div>
-    <div>
-      <button type="submit">Decrypt</button>
+  <form class="grid grid-cols-1 gap-3" action="/" @submit.prevent="doDecrypt">
+    <ImportKeyComponent label="PGP Encrypted Message" v-model="encryptedMessage" :required="true" />
+    <ImportKeyComponent label="Signer Public Key" v-model="publicKey" />
+    <div class="grid md:flex md:justify-end">
+      <button class="btn btn-primary" type="submit">Decrypt</button>
     </div>
   </form>
-  <div v-if="result && typeof result === 'string'">
-    <pre v-text="result"></pre>
-  </div>
 </template>

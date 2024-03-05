@@ -1,4 +1,8 @@
 /** @type {import('tailwindcss').Config} */
+
+import TailwindCSSTypography from '@tailwindcss/typography'
+import DaisyUI from 'daisyui'
+
 export default {
   content: [
     "./index.html",
@@ -8,8 +12,8 @@ export default {
     extend: {},
   },
   plugins: [
-    require('@tailwindcss/typography'),
-    require("daisyui")
+    TailwindCSSTypography,
+    DaisyUI
   ],
 }
 
