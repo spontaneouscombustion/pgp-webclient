@@ -40,7 +40,7 @@ async function doSign() {
 
 <template>
   <form class="grid grid-cols-1 gap-3" action="/" @submit.prevent="doSign">
-    <ImportKeyComponent v-model="textMessage" placeholder="Message" :required="true" />
+    <ImportKeyComponent v-model="textMessage" label="Message" :required="true" />
     <div class="grid md:flex md:justify-end">
       <button class="btn btn-primary" type="submit">Sign</button>
     </div>
