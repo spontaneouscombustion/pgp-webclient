@@ -4,31 +4,39 @@ import {
   encrypt,
   readKey,
   createMessage,
+  enums as enumsValue,
   type EncryptOptions,
   type MaybeStream,
   type Message,
   type Data,
   type WebStream,
-  type NodeStream
+  type NodeStream,
+  type PrivateKey,
+  type enums
 } from 'openpgp'
-import { ref, inject } from 'vue'
+import { ref, inject, onMounted } from 'vue'
 import { privateKeySymbol } from '@/keys'
+
+const textmessage = ref<string>('')
+const recipientPubKeys = ref<string[]>([''])
+const compression = ref<enums.compression>(enumsValue.compression.uncompressed)
+const signingKeys = ref<PrivateKey | undefined>()
+const injected = inject(privateKeySymbol)
 
 const emit = defineEmits<{
   encrypt: [value: string | WebStream<string> | NodeStream<string>]
 }>()
 
-const textmessage = ref<string>('')
-const recipientPubKeys = ref<string[]>([''])
-
-const injected = inject(privateKeySymbol)
+onMounted(() => {
+  signingKeys.value = injected?.privateKey.value
+})
 
 async function doEncrypt() {
   try {
     const pubkeys = await Promise.all(
       recipientPubKeys.value.map(async (pk) => await readKey({ armoredKey: pk }))
     )
-    const signingKeys = injected?.privateKey.value
+    signingKeys.value = injected?.privateKey.value
 
     let encryptOptions: EncryptOptions & {
       message: Message<MaybeStream<Data>>
@@ -38,10 +46,13 @@ async function doEncrypt() {
       encryptionKeys: pubkeys
     }
 
-    if (signingKeys) {
+    if (signingKeys.value) {
       encryptOptions = {
         ...encryptOptions,
-        signingKeys
+        signingKeys: signingKeys.value,
+        config: {
+          preferredCompressionAlgorithm: compression.value
+        }
       }
     }
 
@@ -84,6 +95,17 @@ async function doEncrypt() {
       <button class="btn btn-shadow btn-xs" @click="() => recipientPubKeys.push('')" type="button">
         Add Public Key
       </button>
+    </div>
+    <div class="form-control" v-if="injected?.privateKey.value">
+      <label for="compression" class="label">
+        <span class="label-text">Compression</span>
+      </label>
+      <select id="compression" v-model="compression" class="select select-bordered">
+        <option :value="enumsValue.compression.uncompressed">uncompressed</option>
+        <option :value="enumsValue.compression.zip">zip</option>
+        <option :value="enumsValue.compression.zlib">zlib</option>
+        <option :value="enumsValue.compression.bzip2" disabled>bzip2</option>
+      </select>
     </div>
     <div class="grid md:flex md:justify-end">
       <button class="btn btn-primary" type="submit">Encrypt Message</button>
