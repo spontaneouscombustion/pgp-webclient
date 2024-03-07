@@ -48,7 +48,7 @@ onMounted(() => {
     },
     onOfflineReady() {
       toastAlerts.value.push({
-        message: 'This app can now be used even without internet connection!',
+        message: 'This app is available offline!',
         type: 'alert-info',
         buttons: [
           {
@@ -102,6 +102,7 @@ provide(privateKeySymbol, {
       :key="index"
       :type="alert.type"
       :message="alert.message"
+      class=""
     >
       <div>
         <button
