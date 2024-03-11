@@ -65,9 +65,9 @@ async function check(): Promise<void> {
 
 <template>
   <form class="flex flex-col gap-3" action="/" @submit.prevent="check">
-    <ImportKeyComponent label="Message" v-model="message" :required="true" />
-    <ImportKeyComponent label="Signature (If detached)" v-model="signature" />
-    <ImportKeyComponent label="Signers Public Key" v-model="publicKey" />
+    <ImportKeyComponent placeholder="Message" v-model="message" :required="true" />
+    <ImportKeyComponent placeholder="Signature (If detached)" v-model="signature" />
+    <ImportKeyComponent placeholder="Signers Public Key" v-model="publicKey" />
     <div class="grid md:flex md:justify-end">
       <button class="btn btn-primary" type="submit">Verify</button>
     </div>

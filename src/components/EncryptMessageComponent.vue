@@ -68,13 +68,12 @@ async function doEncrypt() {
 
 <template>
   <form action="/" class="flex flex-col gap-3" @submit.prevent="doEncrypt">
-    <ImportKeyComponent label="Message" v-model="textmessage" :required="true" />
+    <ImportKeyComponent placeholder="Message" v-model="textmessage" :required="true" />
     <div class="grid grid-cols-1 gap-2">
       <div v-for="(rpk, index) in recipientPubKeys" :key="index" class="flex items-end gap-2">
         <ImportKeyComponent
           class="flex-grow"
-          :label="`Recipient #${index}`"
-          placeholder="Please enter your recipient public key"
+          :placeholder="`Please enter recipient #${index} public key`"
           v-model="recipientPubKeys[index]"
           :required="true"
         />

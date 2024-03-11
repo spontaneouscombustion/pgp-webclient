@@ -35,11 +35,11 @@ async function doRevoke(): Promise<void> {
 <template>
   <form class="flex flex-col gap-3" action="/" @submit.prevent="doRevoke">
     <ImportKeyComponent
-      label="Revocation Certificate"
+      placeholder="Revocation Certificate"
       v-model="form.certificate"
       :required="true"
     />
-    <ImportKeyComponent label="Public Key" v-model="form.publicKey" :required="true" />
+    <ImportKeyComponent placeholder="Public Key" v-model="form.publicKey" :required="true" />
     <div class="grid md:flex md:justify-end">
       <button type="submit" class="btn btn-primary">Revoke</button>
     </div>
