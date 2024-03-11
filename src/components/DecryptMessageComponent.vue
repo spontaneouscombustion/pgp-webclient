@@ -65,7 +65,11 @@ async function doDecrypt() {
 
 <template>
   <form class="grid grid-cols-1 gap-3" action="/" @submit.prevent="doDecrypt">
-    <ImportKeyComponent placeholder="PGP Encrypted Message" v-model="encryptedMessage" :required="true" />
+    <ImportKeyComponent
+      placeholder="PGP Encrypted Message"
+      v-model="encryptedMessage"
+      :required="true"
+    />
     <ImportKeyComponent placeholder="Signer Public Key" v-model="publicKey" />
     <div class="grid md:flex md:justify-end">
       <button class="btn btn-primary" type="submit">Decrypt</button>
