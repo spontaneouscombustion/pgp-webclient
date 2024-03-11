@@ -38,7 +38,7 @@ async function doRevoke(): Promise<void> {
 
 <template>
   <form class="flex flex-col gap-2" action="/" @submit.prevent="doRevoke">
-    <ImportKeyComponent label="Private Key" v-model="form.privateKey" />
+    <ImportKeyComponent placeholder="Private Key" v-model="form.privateKey" />
     <div class="form-control">
       <label class="label">
         <span class="text-label">Password</span>
