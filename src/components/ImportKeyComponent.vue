@@ -60,11 +60,9 @@ async function scan(cameraId: string): Promise<void> {
       },
       (decodedText) => {
         inputModel.value = decodedText
-        scanner.value?.stop()
       },
       (errorMessage) => {
         console.log(errorMessage)
-        scanner.value?.stop()
       }
     )
   } catch (err) {
@@ -72,6 +70,8 @@ async function scan(cameraId: string): Promise<void> {
     if (err instanceof Error) {
       alert(err.message)
     }
+  } finally {
+    scanner.value?.stop()
   }
 }
 
@@ -125,16 +125,14 @@ onMounted(async () => {
       v-model="inputModel"
       :required="required"
     ></textarea>
-    <div>
-      <div :id="readerId"></div>
-      <button
-        class="p-2 btn btn-neutral btn-wide"
-        v-if="scanner?.isScanning"
-        type="button"
-        @click="scanner.stop()"
-      >
-        Cancel
-      </button>
-    </div>
+    <div :id="readerId"></div>
+    <button
+      class="p-2 btn btn-neutral btn-wide"
+      v-if="scanner?.isScanning"
+      type="button"
+      @click="scanner.stop()"
+    >
+      Cancel
+    </button>
   </div>
 </template>
