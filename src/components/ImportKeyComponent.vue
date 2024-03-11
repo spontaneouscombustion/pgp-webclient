@@ -125,10 +125,10 @@ onMounted(async () => {
       v-model="inputModel"
       :required="required"
     ></textarea>
-    <div class="grid grid-cols-1 gap-2">
+    <div>
       <div :id="readerId"></div>
       <button
-        class="p-2 btn btn-neutral"
+        class="p-2 btn btn-neutral btn-wide"
         v-if="scanner?.isScanning"
         type="button"
         @click="scanner.stop()"
