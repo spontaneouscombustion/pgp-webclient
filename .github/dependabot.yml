@@ -11,14 +11,14 @@ updates:
       interval: "weekly"
     groups:
       tailwind-daisyui:
-        pattern: 
+        patterns: 
           - "tailwindcss"
           - "@tailwindcss/*"
           - "postcss"
           - "autoprefixer"
           - "daisyui"
       vite-vue-ts:
-        pattern:
+        patterns:
           - "vue"
           - "@vue/*"
           - "vue-router"
@@ -35,7 +35,7 @@ updates:
           - "eslint-plugin-vue"
           - "npm-run-all2"
       application:
-        pattern:
+        patterns:
           - "openpgp"
           - "@openpgp/*"
           - "html5-qrcode"
