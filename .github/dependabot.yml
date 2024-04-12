@@ -8,4 +8,34 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    groups:
+      tailwind-daisyui:
+        pattern: 
+          - "tailwindcss"
+          - "@tailwindcss/*"
+          - "postcss"
+          - "autoprefixer"
+          - "daisyui"
+      vite-vue-ts:
+        pattern:
+          - "vue"
+          - "@vue/*"
+          - "vue-router"
+          - "typescript"
+          - "vue-tsc"
+          - "vite"
+          - "@vitejs/*"
+          - "vite-plugin-pwa"
+          - "@types/*"
+          - "@tsconfig/node20"
+          - "prettier"
+          - "@rushstack/eslint-patch"
+          - "eslint"
+          - "eslint-plugin-vue"
+          - "npm-run-all2"
+      application:
+        pattern:
+          - "openpgp"
+          - "@openpgp/*"
+          - "html5-qrcode"
