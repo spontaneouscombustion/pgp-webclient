@@ -18,7 +18,6 @@ updates:
           - "autoprefixer"
           - "daisyui"
         update-types:
-          - "major"
           - "minor"
       vite-vue-ts:
         patterns:
@@ -38,7 +37,6 @@ updates:
           - "eslint-plugin-vue"
           - "npm-run-all2"
         update-types:
-          - "major"
           - "minor"
       application:
         patterns:
@@ -46,5 +44,4 @@ updates:
           - "@openpgp/*"
           - "html5-qrcode"
         update-types:
-          - "major"
           - "minor"
