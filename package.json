@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "openpgp": "^5.11.1",
-    "vue": "^3.4.24",
+    "vue": "^3.4.25",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
