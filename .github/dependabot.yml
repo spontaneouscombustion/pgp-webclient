@@ -9,6 +9,10 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
+    target-branch: "dependabot"
+    # Labels on pull requests for version updates only
+    labels:
+      - "npm dependencies"
     groups:
       tailwind-daisyui:
         patterns: 
