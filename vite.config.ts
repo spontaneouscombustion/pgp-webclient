@@ -12,6 +12,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       injectRegister: 'inline',
       workbox: {
+        clientsClaim: true,
+        skipWaiting: true,
         globPatterns: [ '**/*.{js,css,html,ico,png,svg}' ]
       },
       manifest: {
