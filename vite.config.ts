@@ -17,7 +17,9 @@ export default defineConfig({
       manifest: {
         name: 'Web PGP',
         short_name: 'WebPGP',
-        description: '',
+        description: 'PGP Client for the web',
+        theme_color: '#1d232a',
+        background_color: '#1d232a',
         icons: [
           {
             src:'./android-chrome-192x192.png',
