@@ -13,7 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "openpgp": "^5.11.1",
+    "openpgp": "^5.11.3",
     "vue": "^3.4.25",
     "vue-router": "^4.3.2"
   },
