@@ -1,5 +1,5 @@
 {
-  "name": "WebPGP",
+  "name": "webpgp",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -13,7 +13,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "openpgp": "^5.11.1",
+    "openpgp": "^6.2.0",
     "vue": "^3.4.25",
     "vue-router": "^4.3.2"
   },
@@ -22,23 +22,23 @@
     "@rushstack/eslint-patch": "^1.10.2",
     "@tailwindcss/typography": "^0.5.13",
     "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.12.7",
+    "@types/node": "^24.0.15",
     "@vitejs/plugin-vue": "^5.2.3",
-    "@vue/eslint-config-prettier": "^9.0.0",
-    "@vue/eslint-config-typescript": "^13.0.0",
-    "@vue/tsconfig": "^0.5.1",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/tsconfig": "^0.7.0",
     "autoprefixer": "^10.4.17",
     "daisyui": "^4.10.2",
-    "eslint": "^8.49.0",
-    "eslint-plugin-vue": "^9.25.0",
+    "eslint": "^9.31.0",
+    "eslint-plugin-vue": "^10.3.0",
     "html5-qrcode": "^2.3.8",
-    "npm-run-all2": "^6.1.1",
+    "npm-run-all2": "^8.0.4",
     "postcss": "^8.4.35",
     "prettier": "^3.0.3",
     "tailwindcss": "^3.4.1",
-    "typescript": "~5.4.5",
+    "typescript": "^5.4.5",
     "vite": "^6.2.4",
     "vite-plugin-pwa": "^1.0.0",
-    "vue-tsc": "^2.0.14"
+    "vue-tsc": "^3.0.3"
   }
 }

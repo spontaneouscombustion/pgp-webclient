@@ -1,6 +1,15 @@
 <script lang="ts" setup>
-import { generateKey, type EllipticCurveName, type SerializedKeyPair } from 'openpgp'
+import {
+  generateKey,
+  type EllipticCurveName
+  //type SerializedKeyPair
+} from 'openpgp'
 import { ref } from 'vue'
+
+interface SerializedKeyPair<T extends string | Uint8Array> {
+  privateKey: T
+  publicKey: T
+}
 
 const emit = defineEmits<{
   generate: [
@@ -11,8 +20,8 @@ const emit = defineEmits<{
 }>()
 
 enum CurveName {
-  ED25519 = 'ed25519',
-  CURVE25519 = 'curve25519',
+  ED25519 = 'ed25519Legacy',
+  CURVE25519 = 'curve25519Legacy',
   P256 = 'p256',
   P384 = 'p384',
   P251 = 'p251',

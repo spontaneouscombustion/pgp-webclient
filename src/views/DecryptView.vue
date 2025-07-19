@@ -1,14 +1,12 @@
 <script lang="ts" setup>
 import DecryptMessageComponent from '@/components/DecryptMessageComponent.vue'
-import { type MaybeStream, type Data, type VerificationResult } from 'openpgp'
+import { type MaybeStream } from 'openpgp'
 import { ref } from 'vue'
 
-const data = ref<MaybeStream<Data>>()
-const signatures = ref<VerificationResult[]>()
+const data = ref<MaybeStream<String>>()
 
-function onDecrypt(d: MaybeStream<Data>, s: VerificationResult[]) {
+function onDecrypt(d: MaybeStream<String>) {
   data.value = d
-  signatures.value = s
 }
 </script>
 

@@ -8,9 +8,7 @@ import {
   type EncryptOptions,
   type MaybeStream,
   type Message,
-  type Data,
   type WebStream,
-  type NodeStream,
   type PrivateKey,
   type enums
 } from 'openpgp'
@@ -24,7 +22,7 @@ const signingKeys = ref<PrivateKey | undefined>()
 const injected = inject(privateKeySymbol)
 
 const emit = defineEmits<{
-  encrypt: [value: string | WebStream<string> | NodeStream<string>]
+  encrypt: [value: string | WebStream<string>]
 }>()
 
 onMounted(() => {
@@ -39,7 +37,7 @@ async function doEncrypt() {
     signingKeys.value = injected?.privateKey.value
 
     let encryptOptions: EncryptOptions & {
-      message: Message<MaybeStream<Data>>
+      message: Message<MaybeStream<String>>
       format?: 'armored' | undefined
     } = {
       message: await createMessage({ text: textmessage.value }),

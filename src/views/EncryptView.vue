@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { WebStream, NodeStream } from 'openpgp'
+import type { WebStream } from 'openpgp'
 import { ref } from 'vue'
 import EncryptMessageComponent from '@/components/EncryptMessageComponent.vue'
-const encryptedText = ref<string | WebStream<string> | NodeStream<string>>()
+const encryptedText = ref<string | WebStream<string>>()
 </script>
 
 <template>

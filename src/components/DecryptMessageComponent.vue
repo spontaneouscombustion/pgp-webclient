@@ -5,9 +5,9 @@ import {
   readKey,
   type DecryptOptions,
   type Message,
-  type VerificationResult,
-  type MaybeStream,
-  type Data
+  type DecryptMessageResult,
+  type Signature,
+  type MaybeStream
 } from 'openpgp'
 import { ref, inject } from 'vue'
 import ImportKeyComponent from './ImportKeyComponent.vue'
@@ -18,7 +18,7 @@ const publicKey = ref<string>('')
 const injected = inject(privateKeySymbol)
 
 const emit = defineEmits<{
-  decrypt: [data: MaybeStream<Data>, signature: VerificationResult[]]
+  decrypt: [data: MaybeStream<String>]
 }>()
 
 async function doDecrypt() {
@@ -47,9 +47,9 @@ async function doDecrypt() {
       }
     }
 
-    const { data, signatures } = await decrypt(decryptOptions)
+    const { data }: DecryptMessageResult = await decrypt(decryptOptions)
 
-    emit('decrypt', data, signatures)
+    emit('decrypt', data)
 
     // result.value = data
 

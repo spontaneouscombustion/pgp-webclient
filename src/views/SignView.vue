@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import SignMessageComponent from '@/components/SignMessageComponent.vue'
-import { type WebStream, type NodeStream } from 'openpgp'
+import { type WebStream } from 'openpgp'
 import { ref } from 'vue'
-const result = ref<string | WebStream<string> | NodeStream<string>>()
+const result = ref<string | WebStream<string>>()
 </script>
 <template>
   <h1 class="text-2xl py-6">Sign Message</h1>

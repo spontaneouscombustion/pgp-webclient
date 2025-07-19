@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { createCleartextMessage, sign, type NodeStream, type WebStream } from 'openpgp'
+import { createCleartextMessage, sign, type WebStream } from 'openpgp'
 import { ref, inject } from 'vue'
 import { privateKeySymbol } from '@/keys'
 import ImportKeyComponent from '@/components/ImportKeyComponent.vue'
@@ -8,7 +8,7 @@ const textMessage = ref<string>('')
 const injected = inject(privateKeySymbol)
 
 const emit = defineEmits<{
-  signed: [data: string | WebStream<string> | NodeStream<string>]
+  signed: [data: string | WebStream<string>]
 }>()
 
 async function doSign() {

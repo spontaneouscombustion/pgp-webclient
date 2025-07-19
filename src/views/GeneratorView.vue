@@ -1,7 +1,12 @@
 <script lang="ts" setup>
-import { type SerializedKeyPair } from 'openpgp'
 import KeyPairGenerator from '@/components/KeyPairGeneratorComponent.vue'
 import { ref } from 'vue'
+
+interface SerializedKeyPair<T extends string | Uint8Array> {
+  privateKey: T
+  publicKey: T
+}
+
 const kp = ref<
   SerializedKeyPair<string> & {
     revocationCertificate?: string
