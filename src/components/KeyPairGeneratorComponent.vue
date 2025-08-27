@@ -42,12 +42,14 @@ enum KeyTTL {
 
 enum PGPKeyType {
   ECC = 'ecc',
-  RSA = 'rsa'
+  RSA = 'rsa',
+  CURVE448 = 'curve448',
+  CURVE25519 = 'curve25519'
 }
 
 enum PGPKeyFormat {
-  OBJECT = 'object',
-  BINARY = 'binary',
+  //OBJECT = 'object',
+  //BINARY = 'binary',
   ARMORED = 'armored'
 }
 
@@ -65,7 +67,7 @@ const identities = ref<{ name: string; email: string }[]>([
 ])
 const password = ref<string>('')
 const curve = ref<EllipticCurveName>(CurveName.CURVE25519)
-const keyFormat = ref<PGPKeyFormat>(PGPKeyFormat.ARMORED)
+//const keyFormat = ref<PGPKeyFormat>(PGPKeyFormat.ARMORED)
 const keyType = ref<PGPKeyType>(PGPKeyType.ECC)
 const rsaBits = ref<RSAKeySize>(RSAKeySize.B4096)
 const keyTtl = ref<KeyTTL>(KeyTTL.YEAR)
@@ -73,30 +75,49 @@ const loader = ref<boolean>(false)
 
 async function generate() {
   loader.value = true
-  if (keyType.value === PGPKeyType.ECC) {
-    const kp = await generateKey({
-      type: PGPKeyType.ECC,
-      curve: curve.value,
-      format: PGPKeyFormat.ARMORED,
-      userIDs: identities.value,
-      passphrase: password.value,
-      keyExpirationTime: keyTtl.value
-    })
-    emit('generate', kp)
-  } else if (keyType.value === PGPKeyType.RSA) {
-    const kp = await generateKey({
-      type: PGPKeyType.RSA,
-      rsaBits: rsaBits.value,
-      format: PGPKeyFormat.ARMORED,
-      userIDs: identities.value,
-      passphrase: password.value,
-      keyExpirationTime: keyTtl.value
-    })
-    emit('generate', kp)
-  } else {
-    alert('Invalid Key Type!')
+  try {
+    if (keyType.value === PGPKeyType.ECC) {
+      const kp = await generateKey({
+        type: PGPKeyType.ECC,
+        curve: curve.value,
+        format: PGPKeyFormat.ARMORED,
+        userIDs: identities.value,
+        passphrase: password.value,
+        keyExpirationTime: keyTtl.value
+      })
+      emit('generate', kp)
+    } else if (keyType.value === PGPKeyType.RSA) {
+      const kp = await generateKey({
+        type: PGPKeyType.RSA,
+        rsaBits: rsaBits.value,
+        format: PGPKeyFormat.ARMORED,
+        userIDs: identities.value,
+        passphrase: password.value,
+        keyExpirationTime: keyTtl.value
+      })
+      emit('generate', kp)
+    } else if(keyType.value === PGPKeyType.CURVE448
+      || keyType.value === PGPKeyType.CURVE25519
+    ) {
+      const kp = await generateKey({
+        type: keyType.value,
+        format: PGPKeyFormat.ARMORED,
+        userIDs: identities.value,
+        passphrase: password.value,
+        keyExpirationTime: keyTtl.value 
+      })
+      emit('generate', kp)
+    } else {
+      alert('Invalid Key Type!')
+    }
+  } catch (e: unknown) {
+    if(e instanceof Error){
+      alert(e.message)
+    }
+    console.log(e)
+  } finally {
+    loader.value = false
   }
-  loader.value = false
 }
 </script>
 <template>
@@ -163,19 +184,11 @@ async function generate() {
         <select id="keyType" class="select select-bordered w-full" v-model="keyType">
           <option :value="PGPKeyType.ECC" v-text="PGPKeyType.ECC"></option>
           <option :value="PGPKeyType.RSA" v-text="PGPKeyType.RSA"></option>
+          <option :value="PGPKeyType.CURVE448" v-text="PGPKeyType.CURVE448"></option>
+          <option :value="PGPKeyType.CURVE25519" v-text="PGPKeyType.CURVE25519"></option>
         </select>
       </div>
       <template v-if="keyType === PGPKeyType.ECC">
-        <div class="form-control">
-          <label class="label" for="keyFormat">
-            <span class="label-text">Format</span>
-          </label>
-          <select id="keyFormat" class="select select-bordered w-full" v-model="keyFormat">
-            <option :value="PGPKeyFormat.ARMORED" v-text="PGPKeyFormat.ARMORED"></option>
-            <option :value="PGPKeyFormat.BINARY" v-text="PGPKeyFormat.BINARY" disabled></option>
-            <option :value="PGPKeyFormat.OBJECT" v-text="PGPKeyFormat.OBJECT" disabled></option>
-          </select>
-        </div>
         <div class="form-control">
           <label class="label" for="curve">
             <span class="label-text">Curve</span>
@@ -204,6 +217,9 @@ async function generate() {
             <option :value="RSAKeySize.B8192">{{ RSAKeySize.B8192 }} Bits</option>
           </select>
         </div>
+      </template>
+      <template v-else-if="keyType === PGPKeyType.CURVE448 || keyType === PGPKeyType.CURVE25519">
+
       </template>
       <template v-else>Invalid Key type</template>
       <div class="form-control">
