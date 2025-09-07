@@ -86,9 +86,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="form-control">
-    <div class="label">
-      <span class="label-text" v-text="label"></span>
+  <fieldset class="fieldset">
+    <div class="label flex justify-between">
+      <span v-text="label"></span>
       <div class="flex">
         <div tabindex="0" class="dropdown" v-if="cameras.length > 0">
           <div role="button" class="btn btn-xs btn-neutral">
@@ -104,7 +104,7 @@ onMounted(async () => {
           </div>
           <ul
             tabindex="0"
-            class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+            class="dropdown-content z-1 menu p-2 shadow-sm bg-base-100 rounded-box w-52"
           >
             <li v-for="camera in cameras" :key="camera.id">
               <button type="button" @click="scan(camera.id)">{{ camera.label }}</button>
@@ -121,7 +121,7 @@ onMounted(async () => {
     </div>
     <textarea
       :placeholder="placeholder"
-      class="textarea textarea-bordered"
+      class="textarea w-full"
       v-model="inputModel"
       :required="required"
     ></textarea>
@@ -134,5 +134,5 @@ onMounted(async () => {
     >
       Cancel
     </button>
-  </div>
+  </fieldset>
 </template>

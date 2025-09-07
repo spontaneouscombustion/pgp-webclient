@@ -30,7 +30,7 @@ function showToast(message: string = '', mode: ToastModes = 'info') {
           />
         </svg>
       </div>
-      <ul tabindex="0" class="shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+      <ul tabindex="0" class="shadow-sm menu dropdown-content z-1 bg-base-100 rounded-box w-52">
         <li>
           <a href="#" @click.prevent="showToast('test')">Download</a>
         </li>

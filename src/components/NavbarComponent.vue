@@ -24,7 +24,7 @@ import { RouterLink } from 'vue-router'
         </div>
         <ul
           tabindex="0"
-          class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+          class="menu menu-sm dropdown-content mt-3 z-1 p-2 shadow-sm bg-base-100 rounded-box w-52"
         >
           <li><RouterLink :to="{ name: 'generate' }">Generate</RouterLink></li>
           <li><RouterLink :to="{ name: 'encrypt' }">Encrypt</RouterLink></li>

@@ -35,12 +35,12 @@ async function save() {
 <template>
   <form class="grid grid-cols-1 gap-2" method="POST" action="/" @submit.prevent="save">
     <ImportKeyComponent placeholder="Please enter your Private key" v-model="privateKeyStr" />
-    <div class="form-control">
-      <label for="privPwd">
-        <span class="label-text">Private Key Password</span>
+    <fieldset class="fieldset">
+      <label class="label" for="privPwd">
+        Private Key Password
       </label>
-      <input id="privPwd" class="input input-bordered" v-model="password" type="password" />
-    </div>
+      <input id="privPwd" class="input" v-model="password" type="password" />
+    </fieldset>
     <button type="submit" class="btn btn-accent btn-block">Save</button>
   </form>
 </template>

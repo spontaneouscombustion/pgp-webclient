@@ -123,30 +123,32 @@ async function generate() {
 <template>
   <form class="flex flex-col gap-3" @submit.prevent="generate" action="/">
     <div v-for="(identity, index) in identities" :key="index" class="flex flex-row gap-2 items-end">
-      <div class="flex-grow grid grid-cols-2 gap-2">
+      <div class="grow grid grid-cols-2 gap-2">
         <div class="form-control">
-          <label for="name">
-            <span class="label-text">Name</span>
+          <label class="floating-label">
+            <span>Name</span>
+            <input
+              id="name"
+              class="input"
+              type="text"
+              placeholder="Name"
+              v-model="identities[index].name"
+              required
+            />
           </label>
-          <input
-            id="name"
-            class="input input-bordered"
-            type="text"
-            v-model="identities[index].name"
-            required
-          />
         </div>
         <div class="form-control">
-          <label for="email">
+          <label class="floating-label">
             <span class="label-text">Email</span>
+            <input
+              id="email"
+              class="input"
+              type="email"
+              placeholder="Email"
+              v-model="identities[index].email"
+              required
+            />
           </label>
-          <input
-            id="email"
-            class="input input-bordered"
-            type="email"
-            v-model="identities[index].email"
-            required
-          />
         </div>
       </div>
       <button
@@ -165,35 +167,35 @@ async function generate() {
     </div>
     <button
       type="button"
-      class="btn btn-bordered btn-block btn-xs"
+      class="btn btn-block btn-xs"
       @click="identities.push({ name: '', email: '' })"
     >
       Add Identity
     </button>
-    <div class="form-control">
-      <label class="label" for="password">
-        <span class="label-text">Password</span>
+    <fieldset class="fieldset">
+      <label class="floating-label">
+        <span>Password</span>
+        <input id="password" class="input w-full" type="password" v-model="password" />
       </label>
-      <input id="password" class="input input-bordered" type="password" v-model="password" />
-    </div>
+    </fieldset>
     <div class="grid grid-cols-2 gap-2">
-      <div class="form-control">
+      <fieldset class="fieldset">
         <label class="label" for="keyType">
-          <span class="label-text">Type</span>
+          Type
         </label>
-        <select id="keyType" class="select select-bordered w-full" v-model="keyType">
+        <select id="keyType" class="select" v-model="keyType">
           <option :value="PGPKeyType.ECC" v-text="PGPKeyType.ECC"></option>
           <option :value="PGPKeyType.RSA" v-text="PGPKeyType.RSA"></option>
           <option :value="PGPKeyType.CURVE448" v-text="PGPKeyType.CURVE448"></option>
           <option :value="PGPKeyType.CURVE25519" v-text="PGPKeyType.CURVE25519"></option>
         </select>
-      </div>
+      </fieldset>
       <template v-if="keyType === PGPKeyType.ECC">
-        <div class="form-control">
+        <fieldset class="fieldset">
           <label class="label" for="curve">
-            <span class="label-text">Curve</span>
+            Curve
           </label>
-          <select id="curve" class="select select-bordered w-full" v-model="curve">
+          <select id="curve" class="select" v-model="curve">
             <option :value="CurveName.ED25519" v-text="CurveName.ED25519"></option>
             <option :value="CurveName.CURVE25519" v-text="CurveName.CURVE25519"></option>
             <option :value="CurveName.P251" v-text="CurveName.P251"></option>
@@ -204,29 +206,29 @@ async function generate() {
             <option :value="CurveName.BRAINPOOLP384R1" v-text="CurveName.BRAINPOOLP384R1"></option>
             <option :value="CurveName.BRAINPOOLP512R1" v-text="CurveName.BRAINPOOLP512R1"></option>
           </select>
-        </div>
+        </fieldset>
       </template>
       <template v-else-if="keyType === PGPKeyType.RSA">
-        <div class="form-control">
+        <fieldset class="fieldset">
           <label class="label" for="rsaBits">
-            <span class="label-text">RSA Size</span>
+            RSA Size
           </label>
-          <select id="rsaBits" class="select select-bordered w-full" v-model="rsaBits">
+          <select id="rsaBits" class="select w-full" v-model="rsaBits">
             <option :value="RSAKeySize.B2048">{{ RSAKeySize.B2048 }} Bits</option>
             <option :value="RSAKeySize.B4096">{{ RSAKeySize.B4096 }} Bits</option>
             <option :value="RSAKeySize.B8192">{{ RSAKeySize.B8192 }} Bits</option>
           </select>
-        </div>
+        </fieldset>
       </template>
       <template v-else-if="keyType === PGPKeyType.CURVE448 || keyType === PGPKeyType.CURVE25519">
 
       </template>
       <template v-else>Invalid Key type</template>
-      <div class="form-control">
+      <fieldset class="fieldset">
         <label class="label" for="keyTtl">
-          <span class="label-text">Key TTL</span>
+          Key TTL
         </label>
-        <select id="keyTtl" class="select select-bordered w-full" v-model="keyTtl">
+        <select id="keyTtl" class="select" v-model="keyTtl">
           <option :value="KeyTTL.DAY">1 Day</option>
           <option :value="KeyTTL.WEEK">1 Week</option>
           <option :value="KeyTTL.MONTH">1 Month</option>
@@ -234,7 +236,7 @@ async function generate() {
           <option :value="KeyTTL.YEAR">1 Year</option>
           <option :value="KeyTTL.NO_EXPIRATION">No Expiration</option>
         </select>
-      </div>
+      </fieldset>
     </div>
     <div class="grid md:flex md:justify-end">
       <button class="btn btn-primary" type="submit" :disabled="loader">

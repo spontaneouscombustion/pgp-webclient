@@ -26,7 +26,7 @@ function onRevoked(publicKey: string) {
 
 <template>
   <div>
-    <div role="tablist" class="tabs tabs-boxed">
+    <div role="tablist" class="tabs tabs-box">
       <button
         v-for="(tab, index) in tabs"
         :key="tab.name"

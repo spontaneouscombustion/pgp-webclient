@@ -70,7 +70,7 @@ async function doEncrypt() {
     <div class="grid grid-cols-1 gap-2">
       <div v-for="(rpk, index) in recipientPubKeys" :key="index" class="flex items-end gap-2">
         <ImportKeyComponent
-          class="flex-grow"
+          class="grow"
           :placeholder="`Please enter recipient #${index} public key`"
           v-model="recipientPubKeys[index]"
           :required="true"
