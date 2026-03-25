@@ -45,7 +45,8 @@
   },
   "overrides": {
     "vite-plugin-pwa": {
-      "vite": "$vite"
+      "vite": "$vite",
+      "serialize-javascript": "^7.0.3"
     }
   }
 }
